@@ -6,9 +6,9 @@
         <div class="navbar-menu">
             <div class="navbar-end">
                 <div class="select is-primary mx-2 my-auto">
-                    <select>
-                        <option>Productos</option>
-                        <option>Usuarios</option>
+                    <select v-model="selected">
+                        <option @click="click(selected)">productos</option>
+                        <option @click="click(selected)">usuarios</option>
                     </select>
                 </div>
                 <div class="mx-2 my-auto">
@@ -23,7 +23,13 @@
 export default {
     data(){
         return{
+            selected:'productos',
             user:'user 3'
+        }
+    },
+    methods: {
+        click(v){
+            console.log(v)
         }
     }
 }
