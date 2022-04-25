@@ -26,6 +26,7 @@
 </template>
 <script>
 import axios from "axios";
+import endpoints from '../router/endpoint.js'
 export default {
     mounted(){
         this.getuser(this.$route.params.id)
@@ -40,12 +41,17 @@ export default {
     },
     methods:{
         async getuser(id){
-            await axios.get('http://localhost:3333/user/'+id)
+            await axios.get(endpoints.http+'/user/'+id)
             .then((response)=>{
                 this.user = response.data.user
             })
             .catch((error)=>console.log(error))
         },
+        edituser(){
+            /*axios.put(endpoints.http+'/actualizarusuario/'+this.$route.params.id.{
+
+            })*/
+        }
         
     }
 };

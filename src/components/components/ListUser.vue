@@ -37,9 +37,10 @@
 
 <script>
 import axios from "axios";
+import endpoints from '../router/endpoint.js'
 export default {
     mounted(){
-        axios.get('http://localhost:3333/list/users')
+        axios.get(endpoints.http+'/list/users')
         .then((response)=>this.users = response.data.datos)
         .catch((error)=>console.log(error))
     },
