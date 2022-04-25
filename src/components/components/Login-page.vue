@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         async login() {
-            axios.post(endpoints.http + '/Login', {
+            axios.post(endpoints.http + '/login', {
                 email: this.user.email,
                 password: this.user.password
             })
