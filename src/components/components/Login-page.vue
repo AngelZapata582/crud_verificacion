@@ -43,7 +43,12 @@ export default {
             axios.post(endpoints.http + '/login', {
                 email: this.user.email,
                 password: this.user.password
-            })
+            },
+            {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
+        })
                 .then((response) => {
                     alert('Ha iniciado sesion')
                     document.getElementById('femail').classList.add('is-success');
