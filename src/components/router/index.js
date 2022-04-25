@@ -7,22 +7,45 @@ import login from '../components/Login-page.vue';
 import listuser from '../components/ListUser.vue';
 import newuser from '../components/NewUser.vue';
 import edituser from '../components/EditUser.vue';
-import newproduct from '../components/NewProduct.vue';
+//import newproduct from '../components/NewProduct.vue';
 import verificarcode from '../components/VerifiCode.vue';
+import verificarlogin from '../components/VerifyLogin.vue';
+import VueCookies from 'vue-cookies';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {path: '/', component:cg, children: [
-            {path:'/:catchAll(.*)',component:pnf,name:'NotFound'},
+        {path: '/', component:cg,beforeEnter(){
+            if(!VueCookies.get('token')){
+                return {name: 'login'}
+            }else{return true}
+        } ,children: [
+            {path:'/:catchAll(.*)',component:pnf,name:'NotFound',beforeEnter(){
+                if(!VueCookies.get('token')){
+                    return {name:'login'}
+                }else{return true}
+            }},
             {path: '/productos', component:listproducts, name:'listproductos'},
             {path: '/usuarios', component:listuser, name:'listusuarios'},
             {path: '/nuevo/usuario', component:newuser, name:'newuser'},
-            {path: '/nuevo/producto', component:newproduct, name:'newproduct'},
+            //{path: '/nuevo/producto', component:newproduct, name:'newproduct'},
             {path: '/editar/user/:id', component:edituser, name:'edituser'}
             
         ]},
-        {path: '/login', component:login, name:'login'},
-        {path: '/verificar/:id', component:verificarcode, name:'verificarcode'}
+        {path: '/login', component:login, name:'login',beforeEnter(){
+            if(VueCookies.get('token')){
+                return {path: '/'}
+            }else{return true}
+        }},
+        {path: '/verificar/:id', component:verificarcode, name:'verificarcode',beforeEnter(){
+            if(VueCookies.get('token')){
+                return {path: '/'}
+            }else{return true}
+        }},
+        {path: '/verificar/login/:id', component:verificarlogin, name:'verificarlogin',beforeEnter(){
+            if(VueCookies.get('token')){
+                return {path: '/'}
+            }else{return true}
+        }}
     ]
 })
 
