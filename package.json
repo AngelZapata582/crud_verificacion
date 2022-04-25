@@ -7,9 +7,11 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
+    "@adonisjs/websocket-client": "^1.0.9",
     "axios": "^0.26.1",
     "bulma": "^0.9.3",
     "vue": "^3.2.31",
+    "vue-cookies": "^1.8.0",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {
