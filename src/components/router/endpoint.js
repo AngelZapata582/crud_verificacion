@@ -1,2 +1,2 @@
-let endpoints = 'http://localhost:3333'
+let endpoints = {http:'https://animex.click',ws:'animex.click'}
 export default endpoints
