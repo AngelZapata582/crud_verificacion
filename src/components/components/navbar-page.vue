@@ -1,11 +1,13 @@
 <template>
     <navbar class="navbar is-dark p-2" role="navigation">
         <div class="navbar-brand">
-            <img class="image is-48x48" src="../../assets/logo.svg" />
+            <a href="/">
+                <img class="image is-48x48" src="../../assets/logo.svg" />
+            </a>
         </div>
         <div class="navbar-menu">
             <div class="navbar-end">
-                
+                <button class="button is-primary my-auto mx-4" @click="logout"> Cerrar sesion</button>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
                         Menu
@@ -28,10 +30,18 @@
 </template>
 
 <script>
+import endpoints from '../router/endpoint.js';
+import VueCookies from 'vue-cookies';
 export default {
     data() {
         return {
-            user: 'user 3'
+            user: VueCookies.get('user_data').username,
+        }
+    },
+    methods: {
+        logout(){
+            VueCookies.remove('user_data')
+            window.location.reload();
         }
     }
 }
