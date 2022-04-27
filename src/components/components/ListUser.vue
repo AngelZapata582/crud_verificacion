@@ -22,7 +22,7 @@
                     <td>
                         <div class="buttons has-addons">
                             <button type="button" 
-                            class="button is-warning" @click="verifyAccion()">Editar</button>
+                            class="button is-warning" @click="verifyAccion('editar',d.id)">Editar</button>
                             <button type="button" class="button is-danger">Eliminar</button>
                         </div>
                     </td>
@@ -46,6 +46,7 @@
                                 <input v-model="code" class="input" type="number" placeholder="Codigo" />
                             </div>
                         </div>
+                        <p class="has-text-danger" v-show="!isCorrect">Codigo incorrecto</p>
                         <div class="field">
                             <button class="button is-info" @click="verificarRol()">Verificar</button>
                         </div>
@@ -80,32 +81,37 @@ export default {
                 email: '',
                 password: ''
             },
+            isCorrect: true,
             users:[]
         };
     },
     methods:{
         verificarRol() {
-            axios.post(endpoints.http+'/verify',{
+            axios.post(endpoints.http+'/verify/authorization',{
                 user_id:VueCookies.get('user_data').id,
                 code:this.code
             })
             .then((response) =>{
                 console.log(response.data)
-                //document.getElementById('verify-model').classList.remove('is-active')
+                if(response.data.status){
+                    document.getElementById('verify-model').classList.remove('is-active')
+                }else{
+                    this.isCorrect = false
+                }
             })
             .catch((error) => console.log(error))
             //document.getElementById('verify-model').parentNode.removeChild(document.getElementById('verify-model'))
         },
-        verifyAccion(action){
+        verifyAccion(action,d){
             axios.get(endpoints.http+'/get/level/'+VueCookies.get('user_data').id)
         .then((response)=>{
             if (response.data < 3){
                 document.getElementById('verify-model').classList.add('is-active');
             }else{
                 if(action=='editar'){
-                    editar()
+                    this.$router.push('/editar/user/'+d)
                 }else if(action=='eliminar'){
-                    eliminar()
+                    eliminar(d)
                 }
             }
         })
