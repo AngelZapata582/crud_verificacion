@@ -1,5 +1,5 @@
 <template>
-    <form class="box m-auto" style="width:450px;">
+    <form @submit.prevent="" class="box m-auto" style="width:450px;">
         <div class="field">
             <label class="label">Nombre</label>
             <div class="control">
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="field">
-            <button class="button is-info" @click="agregar()">Enviar</button>
+            <button class="button is-info" @click="edituser()">Enviar</button>
         </div>
     </form>
 
@@ -59,7 +59,6 @@ import VueCookies from "vue-cookies";
 export default {
     mounted() {
         const id = VueCookies.get('user_data').id
-        console.log(id)
         axios.get(endpoints.http+'/get/level/'+id)
         .then((response)=>{
             if (response.data < 3){
@@ -86,9 +85,14 @@ export default {
                 .catch((error) => console.log(error))
         },
         edituser() {
-            /*axios.put(endpoints.http+'/actualizarusuario/'+this.$route.params.id.{
-
-            })*/
+            axios.put(endpoints.http+'/actualizarusuario',{
+                id:+this.$route.params.id,
+                Nombre:this.user.Nombre,
+                Rol:this.user.Rol,
+                email: this.user.email
+            })
+            .then(() => {$this.$router.back()})
+            .catch((error) => console.log(error))
         },
         verificarRol() {
             axios.post(endpoints.http+'/verify/authorization',{
@@ -97,6 +101,7 @@ export default {
             })
             .then((response) =>{
                 document.getElementById('verify-model').classList.remove('is-active')
+                this.getuser(this.$route.params.id)
             })
             .catch((error) => console.log(error))
             //document.getElementById('verify-model').parentNode.removeChild(document.getElementById('verify-model'))

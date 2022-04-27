@@ -1,6 +1,6 @@
 <template>
     <div class="container box">
-        <div class="m-2">
+        <div class="m-2" id="btn_add">
             <router-link :to="{ name: 'newuser' }" class="button is-primary">Agregar</router-link>
         </div>
         <table class="table mx-auto">
@@ -20,10 +20,10 @@
                     <td>{{ d.email }}</td>
                     <td>{{ d.Rol }}</td>
                     <td>
-                        <div class="buttons has-addons">
-                            <button type="button" class="button is-warning"
+                        <div class="buttons has-addons" >
+                            <button type="button" id="btn_edit" class="button is-warning"
                                 @click="editar(d.id)">Editar</button>
-                            <button type="button" class="button is-danger">Eliminar</button>
+                            <button type="button" id="btn_delete" @click="eliminar(d.id)" class="button is-danger">Eliminar</button>
                         </div>
                     </td>
                 </tr>
@@ -49,6 +49,7 @@
                         <p class="has-text-danger" v-show="!isCorrect">Codigo incorrecto</p>
                         <div class="field">
                             <button class="button is-info" @click="verificarRol()">Verificar</button>
+                            <button class="button is-danger" @click="cerrarModal()">Cancelar</button>
                         </div>
                     </form>
                 </div>
@@ -66,6 +67,9 @@ import endpoints from '../router/endpoint.js';
 import VueCookies from 'vue-cookies';
 export default {
     mounted() {
+        axios.get(endpoints.http+'/get/level/'+VueCookies.get('user_data').id)
+        .then((response) => {this.rol=response.data})
+        .catch((error) => {console.error(error)})
         this.listuser()
     },
     data() {
@@ -79,24 +83,52 @@ export default {
             },
             isCorrect: true,
             users: [],
-            rol:0
+            rol: 0,
+            idd:0
         };
     },
     methods: {
-        listuser() {
-            axios.get(endpoints.http + '/list/users')
+        cerrarModal(){
+            document.getElementById('verify-model').classList.remove('is-active')
+        },
+        async listuser() {
+            await axios.get(endpoints.http + '/list/users')
                 .then((response) => this.users = response.data.datos)
                 .catch((error) => console.log(error))
         },
         eliminar(d) {
-            axios.delete(endpoints.http + '/eliminarusuario/' + d)
-                .then((response) => {
+            console.log(d)
+            if(this.rol<3){
+                document.getElementById('verify-model').classList.add('is-active')
+                this.idd=d
+            }else{
+                axios.delete(endpoints.http + '/eliminarusuario/'+d)
+                .then(() => {
                     this.listuser()
                 })
                 .catch((error) => { console.log(error) })
+            }
         },
-        editar(d){
-            this.$router.push('/editar/user/'+d)
+        editar(d) {
+            this.$router.push('/editar/user/' + d)
+        },
+        verificarRol() {
+            console.log(this.idd)
+            axios.post(endpoints.http+'/verify/authorization',{
+                user_id:VueCookies.get('user_data').id,
+                code:this.code
+            })
+            .then((response) =>{
+                
+                axios.delete(endpoints.http + '/eliminarusuario/'+this.idd)
+                .then((response) => {
+                    document.getElementById('verify-model').classList.remove('is-active')
+                    this.listuser()
+                })
+                .catch((error) => { console.log(error) })
+            })
+            .catch((error) => console.log(error))
+            //document.getElementById('verify-model').parentNode.removeChild(document.getElementById('verify-model'))
         }
     }
 };
