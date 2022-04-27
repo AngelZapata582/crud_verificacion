@@ -5,7 +5,7 @@
             <p class="is-size-2 has-text-centered">Verificacion</p>
             <div class="field">
                 <label class="label">Codigo</label>
-                <p class="is-size-6">Se ha enviado un correo con el codigo a su correo</p>
+                <p class="is-size-6">Se ha enviado el codigo a su correo</p>
                 <div class="control">    
                     <input v-model="code" id="fcode" class="input" type="number" placeholder="Codigo de Verificacion" />
                 </div>
