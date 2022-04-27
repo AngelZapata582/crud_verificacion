@@ -16,7 +16,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/', component:cg,beforeEnter(){
-            if(!VueCookies.get('token')){
+            if(!VueCookies.get('user_data')){
                 return {name: 'login'}
             }else{return true}
         } ,children: [
@@ -29,17 +29,17 @@ const router = createRouter({
             
         ]},
         {path: '/login', component:login, name:'login',beforeEnter(){
-            if(VueCookies.get('token')){
+            if(VueCookies.get('user_data')){
                 return {path: '/'}
             }else{return true}
         }},
         {path: '/verificar/:id', component:verificarcode, name:'verificarcode',beforeEnter(){
-            if(VueCookies.get('token')){
+            if(VueCookies.get('user_data')){
                 return {path: '/'}
             }else{return true}
         }},
         {path: '/verificar/login/:id', component:verificarlogin, name:'verificarlogin',beforeEnter(){
-            if(VueCookies.get('token')){
+            if(VueCookies.get('user_data')){
                 return {path: '/'}
             }else{return true}
         }}
