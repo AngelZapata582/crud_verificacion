@@ -28,7 +28,12 @@ export default {
             ws:null,
             isConnected:false,
             isJoined:false,
-            room:0
+            room:0,
+            data:{
+                username:'',
+                token:'',
+                id:0
+            }
         }
     },
     mounted(){
@@ -54,7 +59,11 @@ export default {
                 })
                 .then((response)=>{
                     if(response.data.status){
-                        VueCookies.set('token',response.data.token,'1d')
+                        this.data.username = response.data.username
+                        this.data.token = response.data.token
+                        this.data.id = response.data.id
+                        VueCookies.set('user_data',this.data,'1d',null,null,true);
+                        //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
                     }                 
                 })

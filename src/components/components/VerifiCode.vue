@@ -26,7 +26,12 @@ export default {
     data() {
         return {
             isCorrect:true,
-            code: ''
+            code: '',
+            data:{
+                username:'',
+                token:'',
+                id:0
+            }
         }
     },
     mounted(){
@@ -43,7 +48,11 @@ export default {
                     document.getElementById('fcode').classList.add('is-success');
                     this.isCorrect=true
                     if(response.data.loged){
-                        VueCookies.set('token',response.data.token,'1d')
+                        this.data.username = response.data.username
+                        this.data.token = response.data.token
+                        this.data.id = response.data.id
+                        VueCookies.set('user_data',this.data,'1d',null,null,true);
+                        //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
                     }else{
                         this.$router.push('/verificar/login/'+this.$route.params.id)

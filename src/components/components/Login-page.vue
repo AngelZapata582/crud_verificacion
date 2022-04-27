@@ -35,6 +35,11 @@ export default {
             user: {
                 email: "",
                 password: ""
+            },
+            data:{
+                username:'',
+                token:'',
+                id:0
             }
         }
     },
@@ -55,13 +60,18 @@ export default {
                     document.getElementById('fpassword').classList.add('is-success');
                     this.isCorrect = true
                     if (response.data.status) {
-                        VueCookies.set('token', response.data.token)
+                        this.data.username = response.data.username
+                        this.data.token = response.data.token
+                        this.data.id = response.data.id
+                        VueCookies.set('user_data',this.data,'1d',null,null,true);
+                        //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
                     } else {
                         this.secondverify(response.data.data)
                     }
                 })
-                .catch(() => {
+                .catch((error) => {
+                    console.error(error)
                     document.getElementById('femail').classList.add('is-danger');
                     document.getElementById('fpassword').classList.add('is-danger');
                     this.isCorrect = false
