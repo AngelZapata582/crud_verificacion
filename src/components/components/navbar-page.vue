@@ -11,8 +11,8 @@
                         Menu
                     </a>
                     <div class="navbar-dropdown">
-                        <a class="navbar-item" href="/productos">
-                            Productos
+                        <a class="navbar-item" href="/administracion">
+                            Administracion
                         </a>
                         <a class="navbar-item" href="/usuarios">
                             Usuarios
@@ -31,7 +31,6 @@
 export default {
     data() {
         return {
-            selected: 'productos',
             user: 'user 3'
         }
     }
