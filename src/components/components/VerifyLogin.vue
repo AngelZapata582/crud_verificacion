@@ -61,7 +61,7 @@ export default {
                     if(response.data.status){
                         this.data.username = response.data.username
                         this.data.token = response.data.token
-                        this.data.id = response.data.id
+                        this.data.id = response.data.cu
                         VueCookies.set('user_data',this.data,'1d');
                         //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
