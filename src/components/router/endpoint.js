@@ -1,2 +1,2 @@
-let endpoints = {http:'http://127.0.0.1:3333',ws:'127.0.0.1:3333'}
+let endpoints = {http:'https://api.animex.click',ws:'api.animex.click'}
 export default endpoints
