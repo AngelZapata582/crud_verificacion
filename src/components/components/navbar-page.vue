@@ -13,7 +13,7 @@
                         Menu
                     </a>
                     <div class="navbar-dropdown">
-                        <a class="navbar-item" href="/administracion">
+                        <a class="navbar-item" href="/administracion" v-if="isShow">
                             Administracion
                         </a>
                         <a class="navbar-item" href="/usuarios">
@@ -32,11 +32,23 @@
 <script>
 import endpoints from '../router/endpoint.js';
 import VueCookies from 'vue-cookies';
+import axios from 'axios'
 export default {
     data() {
         return {
             user: VueCookies.get('user_data').username,
+            rol:0,
+            isShow:false
         }
+    },
+    mounted(){
+        axios.get(endpoints.http+'/get/level/'+VueCookies.get('user_data').id)
+        .then((response) => {
+            if(response.data >= 3){
+                this.isShow = true
+            }
+        })
+        .catch((error) => {console.error(error)})
     },
     methods: {
         logout(){
