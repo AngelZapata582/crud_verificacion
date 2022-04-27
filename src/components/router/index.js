@@ -11,6 +11,7 @@ import edituser from '../components/EditUser.vue';
 import verificarcode from '../components/VerifiCode.vue';
 import verificarlogin from '../components/VerifyLogin.vue';
 import VueCookies from 'vue-cookies';
+import gencode from '../components/GenCode.vue';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -19,12 +20,8 @@ const router = createRouter({
                 return {name: 'login'}
             }else{return true}
         } ,children: [
-            {path:'/:catchAll(.*)',component:pnf,name:'NotFound',beforeEnter(){
-                if(!VueCookies.get('token')){
-                    return {name:'login'}
-                }else{return true}
-            }},
-            {path: '/productos', component:listproducts, name:'listproductos'},
+            {path:'/:catchAll(.*)',component:pnf,name:'NotFound'},
+            {path: '/administracion', component:gencode, name:'administracion'},
             {path: '/usuarios', component:listuser, name:'listusuarios'},
             {path: '/nuevo/usuario', component:newuser, name:'newuser'},
             //{path: '/nuevo/producto', component:newproduct, name:'newproduct'},
