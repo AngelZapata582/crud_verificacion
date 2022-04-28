@@ -44,9 +44,12 @@ export default {
     mounted(){
         axios.get(endpoints.http+'/get/level/'+VueCookies.get('user_data').id)
         .then((response) => {
-            if(response.data >= 3){
-                this.isShow = true
-            }
+            axios.get(endpoints.http+'/ip')
+            .then((res)=>{
+                if(response.data >= 3 && res.data.ip == "137.184.114.118"){
+                this.isShow = true}
+            })
+            .catch((error) => {console.log(error)})
         })
         .catch((error) => {console.error(error)})
     },
