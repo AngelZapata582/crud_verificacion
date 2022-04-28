@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="field">
-            <button class="button is-info" @click="edituser()">Enviar</button>
+            <button class="button is-info" @click="edituser(user.id)">Enviar</button>
         </div>
     </form>
 
@@ -73,7 +73,7 @@ export default {
     data() {
         return {
             user: {},
-            code:0,
+            code:0
         };
     },
     methods: {
@@ -85,13 +85,13 @@ export default {
                 .catch((error) => console.log(error))
         },
         edituser() {
-            axios.put(endpoints.http+'/actualizarusuario',{
+            axios.put(endpoints.http+'/actualizarusuario/'+this.$route.params.id,{
                 id:+this.$route.params.id,
                 Nombre:this.user.Nombre,
                 Rol:this.user.Rol,
                 email: this.user.email
             })
-            .then(() => {$this.$router.back()})
+            .then(() => {this.$router.back()})
             .catch((error) => console.log(error))
         },
         verificarRol() {
