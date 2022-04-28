@@ -43,11 +43,11 @@ export default {
             })
             .then((response)=> {
                 if(response.data.status){
-                    alert('codigo valido')
-                    document.getElementById('fcode').classList.remove('is-danger');
-                    document.getElementById('fcode').classList.add('is-success');
-                    this.isCorrect=true
                     if(response.data.loged){
+                        alert('codigo valido')
+                        document.getElementById('fcode').classList.remove('is-danger');
+                        document.getElementById('fcode').classList.add('is-success');
+                        this.isCorrect=true
                         this.data.username = response.data.username
                         this.data.token = response.data.token
                         this.data.id = response.data.cu
