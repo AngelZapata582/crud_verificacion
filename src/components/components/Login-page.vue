@@ -80,9 +80,17 @@ export default {
         secondverify(id) {
             axios.get(endpoints.http + '/get/level/' + id)
                 .then((response) => {
-                    if (response.data >= 2) {
-                        this.$router.push('/verificar/' + id)
-                    }
+                    axios.get(endpoints.http + '/ip')
+                    .then((res)=>{
+                        if (response.data >= 2) {
+                            if(res.data.ip != "137.184.114.118"){
+                                this.$router.push('/verificar/' + id)
+                            }else{
+                                alert('usuario no autorizado')
+                            }
+                        }
+                    })
+                    .catch((error) => {console.error(error)})
                 })
                 .catch((error) => { console.log(error.message) })
         }
