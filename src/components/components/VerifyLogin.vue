@@ -17,7 +17,7 @@ import endpoints from '../router/endpoint.js';
 import Ws from '@adonisjs/websocket-client'
 import axios from 'axios';
 import VueCookies from 'vue-cookies';
-const ws = Ws('wss://'+endpoints.ws+'/adonis-ws')
+const ws = Ws('wss://'+endpoints.ws)
 export default {
     data(){
         return{
