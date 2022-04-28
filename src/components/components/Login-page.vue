@@ -50,12 +50,12 @@ export default {
                 password: this.user.password
             })
                 .then((response) => {
-                    alert('Ha iniciado sesion')
                     console.log(response.data)
-                    document.getElementById('femail').classList.add('is-success');
-                    document.getElementById('fpassword').classList.add('is-success');
                     this.isCorrect = true
                     if (response.data.status) {
+                        alert('Ha iniciado sesion')
+                        document.getElementById('femail').classList.add('is-success');
+                        document.getElementById('fpassword').classList.add('is-success');
                         this.data.username = response.data.username
                         this.data.token = response.data.token
                         this.data.id = response.data.cu
@@ -63,7 +63,7 @@ export default {
                         //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
                     } else {
-                        if(response.data.message=="usuario no autorizado"){
+                        if(response.data.message){
                             alert('usuario no autorizado')
                         }else{
                             this.secondverify(response.data.data)
