@@ -67,9 +67,6 @@ import endpoints from '../router/endpoint.js';
 import VueCookies from 'vue-cookies';
 export default {
     mounted() {
-        axios.get('https://api.animex.click/ip')
-        .then((response)=>{console.log(response.data)})
-        .catch((error)=>{console.log(error)})
         axios.get(endpoints.http+'/get/level/'+VueCookies.get('user_data').id)
         .then((response) => {this.rol=response.data})
         .catch((error) => {console.error(error)})

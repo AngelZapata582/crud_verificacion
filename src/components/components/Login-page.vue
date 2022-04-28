@@ -51,6 +51,7 @@ export default {
             })
                 .then((response) => {
                     alert('Ha iniciado sesion')
+                    console.log(response.data)
                     document.getElementById('femail').classList.add('is-success');
                     document.getElementById('fpassword').classList.add('is-success');
                     this.isCorrect = true
@@ -62,7 +63,11 @@ export default {
                         //VueCookies.set('username', response.data.username)
                         this.$router.push('/')
                     } else {
-                        this.secondverify(response.data.data)
+                        if(response.data.message=="usuario no autorizado"){
+                            alert('usuario no autorizado')
+                        }else{
+                            this.secondverify(response.data.data)
+                        }
                     }
                 })
                 .catch((error) => {
