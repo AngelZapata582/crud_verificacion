@@ -40,6 +40,7 @@ export default {
         this.id=this.$route.params.id
         ws.connect()
         ws.on('open',()=>{
+            console.log('opened')
             this.room = Math.floor(100000 + Math.random() * 900000)
             const w = ws.subscribe('login:'+this.room)
         w.on('message',(message)=>{
